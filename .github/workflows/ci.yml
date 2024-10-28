@@ -25,7 +25,7 @@ jobs:
 
       - name: Run pylint # New step to run pylint
         run: |
-          pylint src tests  # Run pylint on the src and tests directories
+          pylint src tests/*.py  # Run pylint on the src and tests directories
 
       - name: Run tests
         run: |
