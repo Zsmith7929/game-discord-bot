@@ -9,23 +9,29 @@ TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 # Set up intents
 intents = discord.Intents.default()
-intents.message_content = True  # Allows the bot to read message content
+intents.message_content = True
 
-# Set up bot with command prefix
+# Initialize bot with command prefix and intents
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
+    for guild in bot.guilds:
+        print(f'Connected to server: {guild.name}')
 
-# Example command
-@bot.command(name='start', help='Starts the Factorio server')
-async def start_server(ctx):
-    await ctx.send("Starting the Factorio server...")
+# Automatically load all cogs in the 'cogs' directory
+async def load_cogs():
+    await bot.load_extension('cogs.general')
+    await bot.load_extension('cogs.factorio')
 
-@bot.command(name='stop', help='Stops the Factorio server')
-async def stop_server(ctx):
-    await ctx.send("Stopping the Factorio server...")
+# Run the bot
+async def main():
+    async with bot:
+        await load_cogs()
+        await bot.start(TOKEN)
 
-# Run the bot with token
-bot.run(TOKEN)
+# Run the main function
+if __name__ == '__main__':
+    import asyncio
+    asyncio.run(main())
