@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-
 class Factorio(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -37,6 +36,18 @@ class Factorio(commands.Cog):
                 await ctx.send(f"Failed to stop Factorio server: {response.text}")
         except Exception as e:
             await ctx.send(f"Error: {e}")
+            
+# Command to check the Factorio server status
+    @commands.command(name='status_factorio', help='Displays the Factorio server status')
+    async def server_status(self, ctx):
+        await ctx.send("Checking Factorio server status...")
+        # Placeholder: Add logic to check the server’s status
+        # Example responses based on server state
+        # "The Factorio server is currently running. IP: 123.456.78.90, Port: 34197"
+        await ctx.send("Factorio server is currently running!")  # Placeholder response
+           
+async def setup(bot):
+    await bot.add_cog(Factorio(bot))
 
 async def setup(bot):
     await bot.add_cog(Factorio(bot))
